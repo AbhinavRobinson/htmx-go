@@ -10,18 +10,38 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <section class="grid grid-cols-2 gap-2 w-96 items-center p-4">
+<body class="grid gap-4 p-4">
+  <section class="grid grid-cols-2 gap-2 w-48 items-center">
     <div id="count">
       {{ template "count" . }}
     </div>
-    <button hx-post="/count" hx-target="#count" class="border rounded px-2 py-1 hover:bg-gray-50">Count</button>
+    <button hx-post="/count" hx-target="#count"
+      class="border rounded px-2 py-1 hover:bg-gray-50 text-xs w-fit">Count</button>
   </section>
+  {{ template "form" . }}
+  {{ template "display" . }}
 </body>
 
 </html>
 {{ end }}
 
 {{ block "count" . }}
-Count {{ .Count }}
+Count {{ .Count.Count }}
+{{ end }}
+
+{{ block "form" . }}
+<form hx-post="/contacts" hx-swap="innerHTML" hx-target="#contacts" class="flex gap-2 items-center">
+  name: <input type="text" class="border" name="name" />
+  email: <input type="email" class="border" name="email" />
+  <button type="submit" class="border rounded px-2 py-1 hover:bg-gray-50 text-xs">Create Contact</button>
+</form>
+{{ end }}
+
+{{ block "display" . }}
+<div class="grid grid-cols-2 w-96 border rounded p-4" id="contacts">
+  {{ range .Contacts }}
+  Name: <span>{{ .Name }}</span>
+  Email: <span>{{ .Email }}</span>
+  {{ end }}
+</div>
 {{ end }}
