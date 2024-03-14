@@ -7,14 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title></title>
   <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-  <section style="display: flex; gap: 4px; align-items: center;">
+  <section class="grid grid-cols-2 gap-2 w-96 items-center p-4">
     <div id="count">
       {{ template "count" . }}
     </div>
-    <button hx-post="/count" hx-target="#count">Count</button>
+    <button hx-post="/count" hx-target="#count" class="border rounded px-2 py-1 hover:bg-gray-50">Count</button>
   </section>
 </body>
 
