@@ -22,7 +22,23 @@ func NewTemplates() *Templates {
 	}
 }
 
+type Count struct {
+	Count int
+}
+
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
+
+	e.Renderer = NewTemplates()
+
+	count := Count{Count: 0}
+	e.GET("/", func(c echo.Context) error {
+		count.Count++
+		return c.Render(200, "index", count)
+	})
+
+	e.Logger.Fatal(
+		e.Start(":42069"),
+	)
 }
